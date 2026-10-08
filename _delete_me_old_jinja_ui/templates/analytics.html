@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Analytics</h1>
+
+<div class="stats">
+  <div class="stat"><span>{{ totals.total_bots }}</span>Total Bots</div>
+  <div class="stat"><span>{{ totals.total_conversations }}</span>Conversations</div>
+  <div class="stat"><span>{{ totals.total_messages }}</span>Messages</div>
+  <div class="stat"><span>{{ totals.messages_today }}</span>Messages Today</div>
+</div>
+
+<h2>Per Bot</h2>
+<table>
+<thead><tr><th>Bot</th><th>Conversations</th><th>Messages</th></tr></thead>
+<tbody>
+{% for b in per_bot %}
+<tr><td>{{ b.name }}</td><td>{{ b.conversations }}</td><td>{{ b.messages }}</td></tr>
+{% else %}
+<tr><td colspan="3">No data yet.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

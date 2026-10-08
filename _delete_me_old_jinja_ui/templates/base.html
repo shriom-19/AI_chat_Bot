@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}RAG Bot Admin{% endblock %}</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<nav class="nav">
+  <a href="/dashboard" class="brand">RAG Bot Admin</a>
+  <a href="/dashboard">Dashboard</a>
+  <a href="/conversations">Conversations</a>
+  <a href="/analytics">Analytics</a>
+  <a href="/logout" class="logout">Logout</a>
+</nav>
+<main class="container">
+{% block content %}{% endblock %}
+</main>
+</body>
+</html>

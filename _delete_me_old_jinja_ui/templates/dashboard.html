@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Dashboard</h1>
+
+<div class="stats">
+  <div class="stat"><span>{{ totals.total_bots }}</span>Total Bots</div>
+  <div class="stat"><span>{{ totals.ready_bots }}</span>Ready</div>
+  <div class="stat"><span>{{ totals.indexing_bots }}</span>Indexing</div>
+  <div class="stat"><span>{{ totals.total_conversations }}</span>Conversations</div>
+  <div class="stat"><span>{{ totals.total_messages }}</span>Messages</div>
+</div>
+
+<div class="row">
+  <h2>Bots</h2>
+  <a href="/bots/new" class="btn">+ Create Bot</a>
+</div>
+
+<table>
+<thead><tr><th>Name</th><th>Website</th><th>Status</th><th>Created</th><th>Updated</th><th>Actions</th></tr></thead>
+<tbody>
+{% for bot in bots %}
+<tr>
+  <td>{{ bot.name }}</td>
+  <td><a href="{{ bot.website_url }}" target="_blank" rel="noopener">{{ bot.website_url }}</a></td>
+  <td><span class="badge badge-{{ bot.status }}">{{ bot.status }}</span></td>
+  <td>{{ bot.created_at[:19] }}</td>
+  <td>{{ bot.updated_at[:19] }}</td>
+  <td class="actions-cell">
+    <a href="/bots/{{ bot.id }}">Open</a>
+    <a href="/bots/{{ bot.id }}/chat">Test Chat</a>
+    <form method="post" action="/bots/{{ bot.id }}/reindex" class="inline-form">
+      <button type="submit">Re-index</button>
+    </form>
+    {% if bot.status == 'disabled' %}
+    <form method="post" action="/bots/{{ bot.id }}/enable" class="inline-form">
+      <button type="submit">Enable</button>
+    </form>
+    {% else %}
+    <form method="post" action="/bots/{{ bot.id }}/disable" class="inline-form">
+      <button type="submit">Disable</button>
+    </form>
+    {% endif %}
+    <form method="post" action="/bots/{{ bot.id }}/delete" class="inline-form" onsubmit="return confirm('Delete this bot and all its data?')">
+      <button type="submit" class="danger">Delete</button>
+    </form>
+  </td>
+</tr>
+{% else %}
+<tr><td colspan="6">No bots yet. Create one to get started.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<p><a href="/bots/{{ bot.id }}">&larr; Back to bot</a> &middot; <a href="/bots/{{ bot.id }}/chat">New Session</a></p>
+<h1>Test Chat &mdash; {{ bot.name }}</h1>
+<p class="muted">Session: {{ session_id }}</p>
+
+<div class="chat-box">
+{% for m in messages %}
+  <div class="msg msg-{{ m.role }}"><strong>{{ m.role }}:</strong> {{ m.content }}</div>
+{% else %}
+  <p class="muted">No messages yet. Ask something below.</p>
+{% endfor %}
+</div>
+
+<form method="post" action="/bots/{{ bot.id }}/chat" class="chat-form">
+  <input type="hidden" name="session_id" value="{{ session_id }}">
+  <input type="text" name="message" placeholder="Ask a question..." required autofocus>
+  <button type="submit" class="btn">Send</button>
+</form>
+{% endblock %}

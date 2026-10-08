@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Create Bot</h1>
+<form method="post" action="/bots/new" class="form">
+  <label>Bot Name</label>
+  <input type="text" name="name" required>
+
+  <label>Website URL</label>
+  <input type="url" name="website_url" placeholder="https://example.com" required>
+
+  <label>Description</label>
+  <textarea name="description" rows="2"></textarea>
+
+  <label>System Prompt</label>
+  <textarea name="system_prompt" rows="4" placeholder="You are a helpful assistant for..."></textarea>
+
+  <button type="submit" class="btn">Create Bot</button>
+</form>
+{% endblock %}

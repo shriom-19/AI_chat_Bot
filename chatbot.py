@@ -34,7 +34,8 @@ def extract_text(content) -> str:
 async def generate_rag_answer(
     question: str,
     context: str,
-    history: list | None = None
+    history: list | None = None,
+    system_prompt: str | None = None
 ) -> str:
 
     history_text = ""
@@ -48,8 +49,10 @@ async def generate_rag_answer(
                 f"{message['content']}\n"
             )
 
+    base_instructions = system_prompt.strip() if system_prompt else "You are a helpful website assistant."
+
     prompt = f"""
-You are a helpful website assistant.
+{base_instructions}
 
 Use only the website information provided below.
 

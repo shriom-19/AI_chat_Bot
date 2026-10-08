@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Conversations</h1>
+
+<form method="get" action="/conversations" class="filter-form">
+  <label>Bot</label>
+  <select name="bot_id" onchange="this.form.submit()">
+    <option value="">All bots</option>
+    {% for bot in bots %}
+    <option value="{{ bot.id }}" {% if selected_bot_id == bot.id %}selected{% endif %}>{{ bot.name }}</option>
+    {% endfor %}
+  </select>
+</form>
+
+<table>
+<thead><tr><th>Bot</th><th>Session</th><th>User</th><th>Messages</th><th>Started</th><th>Last Message</th></tr></thead>
+<tbody>
+{% for c in conversations %}
+<tr>
+  <td>{{ c.bot_name }}</td>
+  <td><a href="/conversations/{{ c.id }}">{{ c.session_id }}</a></td>
+  <td>{{ c.user_identifier or '-' }}</td>
+  <td>{{ c.message_count }}</td>
+  <td>{{ c.created_at[:19] }}</td>
+  <td>{{ c.updated_at[:19] }}</td>
+</tr>
+{% else %}
+<tr><td colspan="6">No conversations yet.</td></tr>
+{% endfor %}
+</tbody>
+</table>
+{% endblock %}

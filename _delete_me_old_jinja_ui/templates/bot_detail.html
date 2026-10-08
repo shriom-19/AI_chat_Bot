@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block content %}
+<p><a href="/dashboard">&larr; Dashboard</a></p>
+<h1>{{ bot.name }}</h1>
+<p><a href="{{ bot.website_url }}" target="_blank" rel="noopener">{{ bot.website_url }}</a></p>
+<p>{{ bot.description }}</p>
+<p>Status: <span class="badge badge-{{ bot.status }}">{{ bot.status }}</span></p>
+
+<div class="stats">
+  <div class="stat"><span>{{ stats.documents }}</span>Documents</div>
+  <div class="stat"><span>{{ stats.chunks }}</span>Chunks</div>
+  <div class="stat small"><span>{{ bot.updated_at[:19] }}</span>Last Indexed/Updated</div>
+</div>
+
+<div class="actions">
+  <a href="/bots/{{ bot.id }}/chat" class="btn">Test Chat</a>
+  <a href="/bots/{{ bot.id }}/edit" class="btn">Edit</a>
+  <form method="post" action="/bots/{{ bot.id }}/reindex" class="inline-form">
+    <button type="submit">Re-index</button>
+  </form>
+  {% if bot.status == 'disabled' %}
+  <form method="post" action="/bots/{{ bot.id }}/enable" class="inline-form">
+    <button type="submit">Enable</button>
+  </form>
+  {% else %}
+  <form method="post" action="/bots/{{ bot.id }}/disable" class="inline-form">
+    <button type="submit">Disable</button>
+  </form>
+  {% endif %}
+  <form method="post" action="/bots/{{ bot.id }}/delete" class="inline-form" onsubmit="return confirm('Delete this bot and all its data?')">
+    <button type="submit" class="danger">Delete</button>
+  </form>
+</div>
+
+<h2>System Prompt</h2>
+<pre>{{ bot.system_prompt or '(none set — default assistant prompt is used)' }}</pre>
+{% endblock %}

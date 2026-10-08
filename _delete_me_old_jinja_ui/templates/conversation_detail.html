@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block content %}
+<p><a href="/conversations">&larr; Back to conversations</a></p>
+<h1>Conversation &mdash; {{ conversation.session_id }}</h1>
+
+<div class="chat-box">
+{% for m in messages %}
+  <div class="msg msg-{{ m.role }}">
+    <strong>{{ m.role }}:</strong> {{ m.content }}
+    <span class="ts">{{ m.created_at[:19] }}</span>
+  </div>
+{% else %}
+  <p class="muted">No messages in this conversation.</p>
+{% endfor %}
+</div>
+{% endblock %}

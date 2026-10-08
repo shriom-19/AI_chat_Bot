@@ -327,12 +327,16 @@ async def get_website_links(
 
 
 async def crawl_website(
-    url: str
+    url: str,
+    max_pages: int | None = None
 ) -> list[tuple[str, str]]:
 
     links = await get_website_links(
         url
     )
+
+    if max_pages:
+        links = links[:max_pages]
 
     print(
         f"\nFound {len(links)} pages.\n"
